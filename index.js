@@ -28,10 +28,15 @@ function processFirstItem(stringList, callback) {
  * 
  * 1. What is the difference between counter1 and counter2?
  * 
+ * counter 1 has a variable in its lexical scope, counter2 uses a variable from the global scope
+ * 
  * 2. Which of the two uses a closure? How can you tell?
+ * 
+ * they both use a closure. counter 1 uses 2 closures.
  * 
  * 3. In what scenario would the counter1 code be preferable? In what scenario would counter2 be better? 
  *
+ * global variables use more memory, block variable uses less memory 
 */
 
 // counter1 code
@@ -56,11 +61,11 @@ function counter2() {
 
 Write a function called `inning` that generates a random number of points that a team scored in an inning. This should be a whole number between 0 and 2. */
 
-function inning(/*Code Here*/){
-
-    /*Code Here*/
-
+function inning(){
+  let score = Math.floor(Math.random()*3);
+  return score;
 }
+console.log(inning());
 
 /* Task 3: finalScore()
 
@@ -76,12 +81,18 @@ finalScore(inning, 9) might return:
 
 */ 
 
-function finalScore(/*code Here*/){
-
-  /*Code Here*/
-
+function finalScore(callback,numInn){
+  let home = 0;
+  let away = 0;
+  for(let i = 0; i <= numInn; i++){
+    home += callback();
+  }
+  for(let k = 0; k <= numInn; k++){
+    away += callback();
+  }
+  return (`"Home": ${home}, "Away": ${away}`)
 }
-
+console.log(finalScore(inning, 9))
 /* Task 4: 
 
 Create a function called `scoreboard` that accepts the following parameters: 
@@ -104,8 +115,32 @@ and returns the score at each pont in the game, like so:
 
 Final Score: awayTeam - homeTeam */
 
-function scoreboard(/* CODE HERE */) {
-  /* CODE HERE */
+function getInningScore(cb){
+  return {home: cb(), away: cb()}
 }
-
+console.log(getInningScore(inning))
+function scoreboard(cb1, cb2, numInnnings) {
+  let awayTeam = 0;
+  let homeTeam = 0;
+  for(let i = 1; i <= numInnnings; i++){
+    if( i === 1){
+      awayTeam += cb1(cb2).away
+      homeTeam += cb1(cb2).home
+      console.log(`1st Inning: ${awayTeam} - ${homeTeam}`)
+    }else if(i === 2){
+      awayTeam += cb1(cb2).away
+      homeTeam += cb1(cb2).home
+      console.log(`2nd Inning: ${awayTeam} - ${homeTeam}`)
+    }else if(i === 3){
+      awayTeam += cb1(cb2).away
+      homeTeam += cb1(cb2).home
+      console.log(`3rd Inning: ${awayTeam} - ${homeTeam}`)
+    }else {
+      awayTeam += cb1(cb2).away
+      homeTeam += cb1(cb2).home
+      console.log(`${i}th Inning: ${awayTeam} - ${homeTeam}`)
+    }
+  }console.log(`Final Score: ${awayTeam} - ${homeTeam}`);
+}
+scoreboard(getInningScore, inning, 9)
 
