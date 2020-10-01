@@ -1,12 +1,15 @@
-// 1. I have no flipping idea but I have time to try and figure it out
+// 1. I have no flipping idea but I have time to try and figure it out.
+// I did not predict this. but i stuck the code in codepen and it gave "a defined? false" and "b defined? true". Could this be because a was defined as b, which is defined as 3? would that then make a no longer defined? I am not sure. 
 
-// 2
-function addSome(value1){
-    var addSix = createBase(6);
-    value1 + addSix
+// 2 Did not come up with this. got this from coderbyte. create a closure to keep the value passed to the function createBase even after the inner function is returned. The inner function that is being returned is created within an outer function, making it a closure, and it has access to the variables within the outer function, in this case the variable baseNumber.
+function createBase(baseNumber){
+    return function(N){
+        return baseNumber + N;
+    }
 }
-console.log(addSome(5))
-
+var addSix = createBase(6);
+addSix(10);
+addSix(21);
 
 // 3
 // Pros and Cons Functional vs Object Oriented Programming
